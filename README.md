@@ -12,12 +12,12 @@ Write your code and compile it as form of DLL and inject it with <a href="https:
 Call H00k_CALL like this : 
 ```c++
 H00k_CALL( LPVOID Function_to_look_where_to_hook , DWORD Your_code , int Right_index_for_the_call)
-/* usefull in case you have many CALLs in function) 1 signify first call , 2 second call etc ...*/
+/* usefull in case you have many CALLs in function 1 signify first call , 2 second call etc ...*/
 ```
 # Example
 for this example im using actually a CTF challenge game named pwntown <br/> 
 ```c++
-#include "pch.h"
+
 #include <stdio.h>
 #include <iostream>
 #include <Windows.h>
@@ -39,7 +39,7 @@ DWORD  __cdecl Hook_test(DWORD ecx) {
 DWORD WINAPI maain(LPVOID ll) {
 
     void* pwntown = (void*)GetModuleHandle(L"GameAssembly.dll");
-    _original = (original*)(H00k_CALL((BYTE * )pwntown + 0x2DEF5C , (DWORD)Hook_test , 1) | 0x00007FFD00000000/* H00k_CALL returns pointer 32bit size we need to make it adequate with x64*/) ; 
+    _original = (original*)(H00k_CALL((BYTE * )pwntown + 0x2DEF5C , (DWORD)Hook_test , 1) | 0x00007FFD00000000/* H00k_CALL returns pointer 32bit size we need to make it adequate with x64 base Address of GameAssembly.dll*/) ; 
     return 1; 
 
 }
