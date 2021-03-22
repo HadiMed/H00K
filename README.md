@@ -23,8 +23,8 @@ for this example im using actually a CTF challenge game named pwntown <br/>
 #include <Windows.h>
 #include "Main.h"
 
-typedef DWORD (__cdecl original)(DWORD ecx); // Definition of function that we will Hook 
-original* _original = NULL; 
+typedef DWORD (__cdecl _NetworkAuthenticator)(DWORD ecx); // Definition of function that we will Hook 
+_NetworkAuthenticator *  _original = NULL; 
 
 
 
@@ -36,12 +36,10 @@ DWORD  __cdecl Hook_test(DWORD ecx) {
 }
 
 
-DWORD WINAPI nop(LPVOID ll) {
+DWORD WINAPI maain(LPVOID ll) {
 
     void* pwntown = (void*)GetModuleHandle(L"GameAssembly.dll");
     _original = (original*)(H00k_CALL((BYTE * )pwntown + 0x2DEF5C , (DWORD)Hook_test , 1) | 0x00007FFD00000000/* H00k_CALL returns pointer 32bit size we need to make it adequate with x64*/) ; 
-     
-    printf("Success\n"); 
     return 1; 
 
 }
@@ -60,7 +58,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
         AllocConsole(); 
         FILE* f;
         freopen_s(&f, "CONOUT$", "w", stdout);
-        CreateThread(NULL , 0 , &nop , NULL , 0 , NULL ); 
+        CreateThread(NULL , 0 , &maain , NULL , 0 , NULL ); 
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
