@@ -72,4 +72,4 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 Now starting the game and injecting the DLL <br/>
 We see that The Hook Worked :<br/> 
-<img src="hookoutput.PNG"/> 
+<img src="src/hookoutput.PNG"/> 
