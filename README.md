@@ -39,7 +39,8 @@ DWORD  __cdecl Hook_test(DWORD ecx) {
 DWORD WINAPI maain(LPVOID ll) {
 
     void* pwntown = (void*)GetModuleHandle(L"GameAssembly.dll");
-    _original = (original*)(H00k_CALL((BYTE * )pwntown + 0x2DEF5C , (DWORD)Hook_test , 1) | 0x00007FFD00000000/* H00k_CALL returns pointer 32bit size we need to make it adequate with x64 base Address of GameAssembly.dll*/) ; 
+    _original = (_NetworkAuthenticator * )(H00k_CALL((BYTE * )pwntown + 0x2DEF5C , (DWORD)Hook_test , 1) | 0x00007FFD00000000
+    /* H00k_CALL returns pointer 32bit size we need to make it adequate with x64 base Address of GameAssembly.dll*/) ; 
     return 1; 
 
 }
@@ -68,3 +69,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 ```
+
+Now starting the game and injecting the DLL <br/>
+We see that The Hook Worked :<br/> 
+<img src="Hookout.png"/> 
